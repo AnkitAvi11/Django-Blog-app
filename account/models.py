@@ -24,7 +24,8 @@ class UserProfile(models.Model) :
 
     #   overriding the delete method
     def delete(self, *args, **kwargs) : 
-        self.profile_pic.delete()
+        if self.profile_pic != 'default.png' : 
+            self.profile_pic.delete()
         super().delete(*args, **kwargs)
 
 

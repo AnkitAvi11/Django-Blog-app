@@ -4,6 +4,7 @@
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout
 from django.contrib import messages
+import re
 
 def is_authenticated(view_function) : 
     def wrapper_function(request, *args, **kwargs) : 
@@ -21,3 +22,12 @@ def is_admin(view_function) :
             return redirect('/account/login/')
         return view_function(request, *args, **kwargs)
     return wrapper_function
+
+def is_valid_email(email) : 
+    regex = re.compile('^([a-zA-Z0-9\-\_\.])+\@([a-zA-Z0-9\-\_\.])+\.([a-zA-Z0-9]{2,4})$')
+    return re.match(regex, email)
+
+def is_valid_username(username) : 
+    regex = re.compile('^([a-zA-Z0-9\_]{8,})$')
+    return re.match(regex, username)
+    
