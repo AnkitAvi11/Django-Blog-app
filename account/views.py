@@ -138,3 +138,21 @@ def changeUserinfo(request) :
         user.save()
         messages.success(request,'Changes made successfully')
         return redirect('/account/setting/')
+
+
+@login_required(login_url='/account/login/')
+@is_admin
+def changeProfilepic(request) : 
+    if request.method == 'POST' :
+        try : 
+            userprofile = UserProfile.objects.get(user=request.user)
+            userprofile.profile_pic = request.FILES.get('profile_pic')
+            userprofile.save()
+            data = {
+                'message' : 'Success'
+            }
+        except : 
+            data = {
+                'message' : 'Error occurred'
+            }
+        return JsonResponse(data)
