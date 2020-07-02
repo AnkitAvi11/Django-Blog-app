@@ -74,11 +74,15 @@ def signupView(request) :
         # request method is GET
         return render(request, 'account/signup.html')
 
+@login_required(login_url='/account/login/')
 @is_admin
 def logoutView(request) :
-    logout(request)
-    messages.success(request, 'You have been successfully logged out')
-    return redirect('/account/login/')
+    if request.method == 'POST' : 
+        logout(request)
+        messages.success(request, 'You have been successfully logged out')
+        return redirect('/account/login/')
+    else : 
+        return redirect('/')
 
 @login_required(login_url='/account/login/')
 @is_admin
@@ -99,6 +103,8 @@ def deleteAccount(request) :
         else :
             messages.error(request, 'Incorrect password')
             return redirect('/account/setting/')
+    else :
+        return redirect('/')
 
 
 
@@ -125,6 +131,8 @@ def changePassword(request) :
         else : 
             messages.error(request, 'Incorrect old password entered')
             return redirect('/account/setting/')
+    else :
+        return redirect('/')
 
 @login_required(login_url='/account/login/')
 @is_admin
@@ -138,6 +146,8 @@ def changeUserinfo(request) :
         user.save()
         messages.success(request,'Changes made successfully')
         return redirect('/account/setting/')
+    else :
+        return redirect('/')
 
 
 @login_required(login_url='/account/login/')
@@ -156,3 +166,5 @@ def changeProfilepic(request) :
                 'message' : 'Error occurred'
             }
         return JsonResponse(data)
+    else : 
+        return redirect('/')

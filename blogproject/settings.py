@@ -27,7 +27,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'django.contrib.humanize',
+    'blog.apps.BlogConfig',
+    'ckeditor',
 ]
+
+CKEDITOR_UPLOAD_PATH = 'ckeditor/blogs/'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

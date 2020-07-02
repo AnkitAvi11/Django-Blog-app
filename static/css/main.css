@@ -36,3 +36,9 @@ div#profile_pic:hover > div.overlay {
 #file_profile{
     display: none;
 }
+
+
+
+#cke_1_contents{
+    min-height: 300px !important;
+}
