@@ -5,9 +5,9 @@ from blog.models import Blog
 
 def homeView(request) :
     if request.user.is_authenticated : 
-        blogs = Blog.objects.all().exclude(user=request.user).order_by('-pub_date')
+        blogs = Blog.objects.exclude(user=request.user).exclude(cover_pic__iexact="").exclude(cover_pic__isnull=True).order_by('-pub_date')
     else :
-        blogs = Blog.objects.all().order_by('-pub_date')
+        blogs = Blog.objects.exclude(cover_pic__iexact="").exclude(cover_pic__isnull=True).order_by('-pub_date')
 
     context = {
         "blogs" : blogs

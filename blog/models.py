@@ -9,7 +9,7 @@ from ckeditor.fields import RichTextField
 class Blog(models.Model) : 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    description = models.CharField(max_length = 200, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     slug = models.SlugField()
     body = RichTextField()
     cover_pic = models.ImageField(upload_to = 'cover/', blank=True, null=True)
