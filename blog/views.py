@@ -22,12 +22,7 @@ def createBlog(request) :
             user = request.user
             title = request.POST.get('title')
             description = request.POST.get('description')
-            slug = slugify(title)
-
-            #   checking if the slug exists already
-            if Blog.objects.filter(slug = slug).exists() : 
-                slug = "{}-{}".format(slug, random_string_generator(size=10))
-
+            
             #   getting rest of the contents of the blog
             body = request.POST.get('content')
             cover_pic = request.FILES.get('cover', None)
@@ -35,15 +30,14 @@ def createBlog(request) :
             pub_date = timezone.now()
 
             #   creatinjg a blog and saving into the database
-            blog = Blog(user=user, title=title, description=description, slug = slug, body=body, cover_pic=cover_pic, is_private=is_private, pub_date=pub_date)
+            blog = Blog(user=user, title=title, description=description, body=body, cover_pic=cover_pic, is_private=is_private, pub_date=pub_date)
             blog.save()
 
             messages.success(request, 'Blog published')
             return redirect('/blog/create/')
-
-        except :
-            #   block of code to handle if something goes wrong
-            messages.error(request, 'Some errors have occurred')
+        except Exception as e: 
+            #   if something goes wrong
+            messages.error(request, e)
             return redirect('/blog/create/')
         
     else : 

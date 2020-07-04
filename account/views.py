@@ -79,8 +79,7 @@ def signupView(request) :
 def logoutView(request) :
     if request.method == 'POST' : 
         logout(request)
-        messages.success(request, 'You have been successfully logged out')
-        return redirect('/account/login/')
+        return redirect('/')
     else : 
         return redirect('/')
 

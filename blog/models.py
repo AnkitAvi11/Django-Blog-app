@@ -8,9 +8,8 @@ from ckeditor.fields import RichTextField
 
 class Blog(models.Model) : 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.TextField()
     description = models.TextField(blank=True, null=True)
-    slug = models.SlugField()
     body = RichTextField()
     cover_pic = models.ImageField(upload_to = 'cover/', blank=True, null=True)
     is_private = models.BooleanField(default=False)
@@ -19,6 +18,15 @@ class Blog(models.Model) :
 
     def __str__(self) : 
         return self.title
+    
+    def save(self, *args, **kwargs) :
+        try : 
+            prev = Blog.objects.get(id=self.id)
+            if prev.cover_pic != self.cover_pic : 
+                prev.cover_pic.delete()
+        except : 
+            pass
+        super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs) :
         self.cover_pic.delete()
