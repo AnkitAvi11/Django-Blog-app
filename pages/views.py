@@ -25,13 +25,19 @@ def getUser(request, username) :
             #   checking if the authenticated user is same as the searched one
             if request.user.username == username : 
                 blogs = Blog.objects.filter(user=profile.user)
+            else : 
+                blogs = Blog.objects.filter(user=profile.user).exclude(is_private=True)    
         else : 
             blogs = Blog.objects.filter(user=profile.user).exclude(is_private=True)
+
+        sameuser = True if request.user.username == username else False
         
         context = {
             "profile" : profile,
-            "blogs" : blogs
+            "blogs" : blogs,
+            "is_same_user" : sameuser
         }
+
     except Exception as e: 
         print("Exception = ", e)
         raise Http404
