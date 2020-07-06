@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 
 from django import forms
 from django.utils.text import slugify
@@ -42,3 +42,19 @@ def createBlog(request) :
         
     else : 
         return render(request, 'pages/createblog.html')
+
+def viewBlog(request, id) : 
+    try : 
+        blog = Blog.objects.get(id=id)
+        if blog is not None : 
+            if blog.is_private == True and request.user!=blog.user: 
+                raise NameError("Sorry! This blog is private and you don't have rights to view it.")
+            else :
+                return render(request, 'pages/viewblog.html', {"blog":blog})
+        else : 
+            raise Http404
+    except Exception as e: 
+        context = {
+            "error" : e
+        }
+        return render(request, 'pages/errorpage.html', context)

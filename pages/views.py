@@ -24,11 +24,11 @@ def getUser(request, username) :
         if request.user.is_authenticated : 
             #   checking if the authenticated user is same as the searched one
             if request.user.username == username : 
-                blogs = Blog.objects.filter(user=profile.user)
+                blogs = Blog.objects.filter(user=profile.user).order_by('-pub_date')
             else : 
-                blogs = Blog.objects.filter(user=profile.user).exclude(is_private=True)    
+                blogs = Blog.objects.filter(user=profile.user).exclude(is_private=True).order_by('-pub_date')
         else : 
-            blogs = Blog.objects.filter(user=profile.user).exclude(is_private=True)
+            blogs = Blog.objects.filter(user=profile.user).exclude(is_private=True).order_by('-pub_date')
 
         sameuser = True if request.user.username == username else False
         

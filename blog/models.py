@@ -31,3 +31,8 @@ class Blog(models.Model) :
     def delete(self, *args, **kwargs) :
         self.cover_pic.delete()
         super().delete(*args, **kwargs)
+
+    def is_recent(self) : 
+        recent = True if self.pub_date >= (timezone.now()-timedelta(days=2)) else False
+        print(recent)
+        return recent
