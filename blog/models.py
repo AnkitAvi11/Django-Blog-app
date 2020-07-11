@@ -15,6 +15,7 @@ class Blog(models.Model) :
     is_private = models.BooleanField(default=False)
     is_published = models.BooleanField(default=True)
     pub_date = models.DateTimeField(default=timezone.now())
+    likes = models.ManyToManyField(User, related_name="userlikes")
 
     def __str__(self) : 
         return self.title

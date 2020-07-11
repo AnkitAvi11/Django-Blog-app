@@ -7,6 +7,7 @@ from .models import UserProfile
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http.request import HttpRequest
 
 from .decorators import is_authenticated, is_admin, is_valid_email, is_valid_username
 

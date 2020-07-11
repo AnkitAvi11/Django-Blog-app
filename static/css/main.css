@@ -4,8 +4,8 @@
 
 #myform {
     padding: 25px;
-    border: 1px solid skyblue;
-    border-left: 5px solid skyblue;
+    border: 1px solid #073642;
+    border-left: 5px solid #073642;
     border-radius: 5px;
 }
 
