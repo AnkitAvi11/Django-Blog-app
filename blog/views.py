@@ -58,3 +58,29 @@ def viewBlog(request, id) :
             "error" : e
         }
         return render(request, 'pages/errorpage.html', context)
+
+@login_required(login_url='/account/login/')
+def likePost(request) : 
+    try : 
+        if request.method == 'POST' : 
+            blogid = request.POST.get('blogid')
+            user = request.user
+            blog = Blog.objects.get(id=blogid)
+
+            if user in blog.likes.all() : 
+                blog.likes.remove(user)
+                message = 'far'
+            else: 
+                blog.likes.add(user)
+                message = 'fas'
+
+            return JsonResponse({
+                'status' : message
+            })
+        else : 
+            raise Http404()
+    except Exception as e:
+        context = {
+            "error" : "You are not authorised to view this page"
+        }
+        return render(request, 'pages/errorpage.html', context)
